@@ -34,19 +34,26 @@ $(document).ready(function() {
   
   function updateTimeBlockBackgroundColors() {
     
-    var currentHour = dayjs().hour();
+    var currentHour = moment().format("HH");
 
-    $('.time-block').each(function() {
-      var timeBlockHour = parseInt($(this).attr('id').split('-')[1]);
-
-      $(this).removeClass('past present future');
-
-      if (timeBlockHour < currentHour) {
-        $(this).addClass('past');
-      } else if (timeBlockHour === currentHour) {
-        $(this).addClass('present');
+    // Loop through each time slot element
+    $(".time-block").each(function () {
+      var timeSlot = $(this);
+      var timeSlotHour = timeSlot.attr("data-hour");
+    
+      // Remove any old classes before adding new classes
+      timeSlot.removeClass("past present future");
+    
+      // Compare the time slot hour to the current hour
+      if (timeSlotHour < currentHour) {
+        // Time slot is in the past
+        timeSlot.addClass("past");
+      } else if (timeSlotHour === currentHour) {
+        // Time slot is in the present
+        timeSlot.addClass("present");
       } else {
-        $(this).addClass('future');
+        // Time slot is in the future
+        timeSlot.addClass("future");
       }
     });
   }
